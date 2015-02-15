@@ -9,31 +9,31 @@ public class Network implements Comparable<Network>{
 	private int maxWeight;
 	private Random generator;
 	private int score;
-	
+
 	public Network(){
 		layers = new ArrayList<ArrayList<Neuron>>();
 		maxWeight = 100;
 		generator = new Random();
 		score = 0;
 	}
-	
+
 	public Network(int maxWeight){
 		this();
 		this.maxWeight = maxWeight;
 	}
-	
+
 	public void addLayer(){
 		layers.add(new ArrayList<Neuron>());
 	}
-	
+
 	public void addLayer(ArrayList<Neuron> layer){
 		layers.add(layer);
 	}
-	
+
 	public ArrayList<Neuron> getLayer(int layer){
 		return layers.get(layer);
 	}
-	
+
 	public int getScore() {
 		return score;
 	}
@@ -53,7 +53,7 @@ public class Network implements Comparable<Network>{
 			}
 		}
 	}
-	
+
 	public void input(ArrayList<Integer> input) throws InvalidInputLayerException{
 		// TODO: Figure out what this actually does and comment it properly.
 		ArrayList<Neuron> inputLayer = layers.get(layers.size()-1);
@@ -63,10 +63,10 @@ public class Network implements Comparable<Network>{
 			} else {
 				throw new InvalidInputLayerException("");
 			}
-			
+
 		}
 	}
-	
+
 	public int output(int node) throws InvalidInputLayerException{
 		return layers.get(0).get(node).output();
 	}
