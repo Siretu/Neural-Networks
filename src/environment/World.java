@@ -6,15 +6,28 @@ public class World {
 	public static final int nrStocks = 20;
 	public static final int historySize = 100;
 	
+	private ArrayList<Agent> agents;
 	public double[][] stockHistory;
 	
 	public World() {
-		System.out.println("Let there be light.");
-		System.out.println("And it was still dark. You were likely to be eaten by a grue.");
-		System.out.println("Let there be stocks.");
 		stockHistory = new double[nrStocks][historySize];
-		System.out.println("And there were stocks");
 		
+	}
+
+	public ArrayList<Agent> getAgents() {
+		return agents;
+	}
+	
+	public Agent getAgent(int index) {
+		return agents.get(index);
+	}
+
+	public void setAgents(ArrayList<Agent> agents) {
+		this.agents = agents;
+	}
+	
+	public void addAgent(Agent a) {
+		agents.add(a);
 	}
 	
 }
