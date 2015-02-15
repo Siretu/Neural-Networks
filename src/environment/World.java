@@ -10,7 +10,7 @@ public class World {
 	
 	public World() {
 		System.out.println("Let there be light.");
-		System.out.println("And it was still dark.");
+		System.out.println("And it was still dark. You were likely to be eaten by a grue.");
 		System.out.println("Let there be stocks.");
 		stockHistory = new double[nrStocks][historySize];
 		System.out.println("And there were stocks");
