@@ -8,16 +8,15 @@ import environment.World;
 public class Agent {
 	private Network network;
 	private ArrayList<Double> stocks;
-	
+
 	public Agent() {
-		setNetwork(new Network());
-		setStocks(new ArrayList<Double>(World.nrStocks));
+		this(new Network());
 	}
-	
+
 	public Agent(Network n) {
 		setNetwork(n);
 		setStocks(new ArrayList<Double>(World.nrStocks));
-	}
+	}	
 
 	public Network getNetwork() {
 		return network;
@@ -38,5 +37,5 @@ public class Agent {
 	public void setStocks(ArrayList<Double> stocks) {
 		this.stocks = stocks;
 	}
-	
+
 }
