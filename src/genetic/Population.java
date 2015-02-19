@@ -6,7 +6,7 @@ import java.util.Collection;
 import environment.*;
 
 public class Population {
-	public static final double percBreedAvg = 0.8;	
+	public static final double percBreedAvg = 0.8;	// We can either breed with mix or avg. This determines amount bred with avg.
 	public static final double percSurviving = 0.5;	// This many total agents survive
 	public static final double percMutating = 0.2;	// Out of the surviving agents, this many mutate.
 	
@@ -23,7 +23,7 @@ public class Population {
 		finalizeCycle();
 	}
 	
-	public void breedMix(){breedMix(100-percBreedAvg);}
+	public void breedMix(){breedMix(1-percBreedAvg);}
 	public void breedAvg(){breedAvg(percBreedAvg);}
 	public void evolve(){evolve(percMutating);}
 	public void survive(){survive(percSurviving);}
