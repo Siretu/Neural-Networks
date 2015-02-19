@@ -15,7 +15,7 @@ public class Agent {
 	private double funds;
 	
 	public Agent() {
-		this(new Network());
+		this(new Network()); 
 	}
 
 	public Agent(Network n) {

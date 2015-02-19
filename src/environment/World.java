@@ -18,11 +18,12 @@ public class World {
 		currentTick = INPUT_SIZE;
 		
 		agents = new ArrayList<Agent>(NR_AGENTS);
+		System.out.println(agents.size());
+		System.out.println(NR_AGENTS);
 		for (int i = 0; i < NR_AGENTS; i++) {
 			Agent a = new Agent();
 			a.setWorld(this);
-			agents.set(i, a);
-			
+			agents.add(a);
 		}
 	}
 	
