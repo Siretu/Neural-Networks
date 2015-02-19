@@ -1,9 +1,15 @@
 package neuralnetwork;
 
+
 import java.util.ArrayList;
 import java.util.Random;
 
 public class Neuron {
+	private static final boolean DEBUGGING_NEURON = false;
+	private static void debug_println(String s){
+		if(DEBUGGING_NEURON) System.out.println(s);
+	}
+	
 	private ArrayList<Axon> inputs;
 	private double threshold;
 	private Random generator;
@@ -17,6 +23,17 @@ public class Neuron {
 	public Neuron(double threshold){
 		this();
 		this.threshold = threshold;
+	}
+	
+	//deep copy constructor
+	//XXX: DOES NOT COPY AXON LINKS - do this manually, since you need to point to other neurons
+	public Neuron(Neuron n){
+		
+
+	}
+	
+	public ArrayList<Axon> getInputs() {
+		return inputs;
 	}
 
 	public void addInput(Axon neuron){
@@ -44,10 +61,10 @@ public class Neuron {
 		}
 		
 		if(activation >= threshold){
-			System.out.println("Activation: "+activation + " | Threshold: "+threshold);
+			debug_println("Activation: "+activation + " | Threshold: "+threshold);
 			return 1;
 		} else {
-			System.out.println("Threshold: "+threshold + " | Activation: "+activation);
+			debug_println("Threshold: "+threshold + " | Activation: "+activation);
 			return 0;
 		}
 		

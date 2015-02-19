@@ -6,7 +6,7 @@ public class World {
 	public static final int NR_STOCKS = 20;
 	public static final int HISTORY_SIZE = 100;
 	public static final int INPUT_SIZE = 20;
-	public static final int NR_AGENTS = 200;
+	public static final int NR_AGENTS = 200; //keep multiple of 100 to avoid percentile issues
 	
 	private ArrayList<Agent> agents;
 	public double[][] stockHistory;

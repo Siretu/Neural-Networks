@@ -4,22 +4,36 @@ import java.util.ArrayList;
 import java.util.Random;
 
 
-public class Network implements Comparable<Network>{
+public class Network{
 	private ArrayList<ArrayList<Neuron>> layers;
 	private int maxWeight;
 	private Random generator;
-	private int score;
 
 	public Network(){
 		layers = new ArrayList<ArrayList<Neuron>>();
 		maxWeight = 100;
 		generator = new Random();
-		score = 0;
 	}
 
 	public Network(int maxWeight){
 		this();
 		this.maxWeight = maxWeight;
+	}
+	
+	public Network(Network n){
+		this();
+		maxWeight = n.maxWeight;
+		
+		ArrayList<ArrayList<Neuron>> temp = n.getLayers();
+		for (int i_ = layers.size()-1; i_ >= 0; --i_){
+			ArrayList<Neuron> aln = temp.get(i_);
+			for(Neuron nn : aln){
+				Neuron tempneu = new Neuron(nn);
+				aln.add(tempneu);
+				//TODO: add links to previous layer
+			}
+			
+		}
 	}
 
 	public void addLayer(){
@@ -33,14 +47,11 @@ public class Network implements Comparable<Network>{
 	public ArrayList<Neuron> getLayer(int layer){
 		return layers.get(layer);
 	}
-
-	public int getScore() {
-		return score;
+	
+	public ArrayList<ArrayList<Neuron>> getLayers() {
+		return layers;
 	}
 
-	public void setScore(int score) {
-		this.score = score;
-	}
 
 	public void addNeuron(int layer, Neuron n){
 		while(layers.size() <= layer){
@@ -71,8 +82,4 @@ public class Network implements Comparable<Network>{
 		return layers.get(0).get(node).output();
 	}
 
-	@Override
-	public int compareTo(Network n) {
-		return this.getScore() - n.getScore();
-	}
 }
