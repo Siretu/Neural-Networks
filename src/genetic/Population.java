@@ -53,11 +53,15 @@ public class Population {
 	}
 	
 	public double getFitnessSum() {
-		return 0;
+		double result = 0;
+		for (Agent a : populationAgents) {
+			result += a.getFitness();
+		}
+		return result;
 	}
 	
 	public double getFitness(int index) {
-		return index;
+		return populationAgents.get(index).getFitness();
 	}
 
 	public World getWorld() {

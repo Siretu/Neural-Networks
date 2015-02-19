@@ -65,6 +65,15 @@ public class Agent {
 		}
 	}
 	
+	public double getFitness() {
+		double result = funds;
+		for (int i = 0; i < world.NR_STOCKS; i++) {
+			double currentPrice = world.getPrice(i);
+			result += stocks.get(i) * currentPrice;
+		}
+		return result;
+	}
+	
 	/* Accessor functions */
 
 	public Network getNetwork() {
