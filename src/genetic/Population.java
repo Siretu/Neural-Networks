@@ -6,12 +6,14 @@ import java.util.Collection;
 import environment.*;
 
 public class Population {
-	public static final int percBreedAvg = 20;
-	public static final int percBreedMix = 20;	
-	public static final int percSurviving = 40;
-	public static final int percMutating = 20;
+	public static final double percBreedAvg = 0.8;	
+	public static final double percSurviving = 0.5;	// This many total agents survive
+	public static final double percMutating = 0.2;	// Out of the surviving agents, this many mutate.
 	
+	protected ArrayList<Agent> populationAgents = new ArrayList<Agent>(World.NR_AGENTS);
 	protected ArrayList<Agent> selectedSpecimens = new ArrayList<Agent>(World.NR_AGENTS);
+	
+	private World world;
 	
 	public void evolveCycle(){
 		breedAvg();
@@ -21,24 +23,24 @@ public class Population {
 		finalizeCycle();
 	}
 	
-	public void breedMix(){breedMix(percBreedMix);}
+	public void breedMix(){breedMix(100-percBreedAvg);}
 	public void breedAvg(){breedAvg(percBreedAvg);}
 	public void evolve(){evolve(percMutating);}
 	public void survive(){survive(percSurviving);}
 	
-	public void breedMix(int perc){
+	public void breedMix(double perc){
 		
 	}
 	
-	public void breedAvg(int perc){
+	public void breedAvg(double perc){
 		
 	}
 	
-	public void evolve(int perc){
+	public void evolve(double perc){
 		
 	}
 	
-	public void survive(int perc){
+	public void survive(double perc){
 		
 	}
 	
@@ -52,10 +54,16 @@ public class Population {
 	
 	public double getFitness(int index);
 
-	public World getWorld();
+	public World getWorld() {
+		return world;
+	}
 	
-	public Collection<Agent> getAgents();
+	public Collection<Agent> getAgents() {
+		return populationAgents;
+	}
 	
-	public void run();//{world.runWorld()}
+	public void run(){
+		world.runWorld();
+	}
 	
 }
