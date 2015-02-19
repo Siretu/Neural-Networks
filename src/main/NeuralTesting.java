@@ -3,8 +3,8 @@ package main;
 import java.util.ArrayList;
 import java.util.HashMap;
 
-import genetic.Evolution;
-import genetic.Population;
+//import genetic.Evolution;
+//import genetic.Population;
 import neuralnetwork.*;
 
 public class NeuralTesting {
@@ -25,9 +25,9 @@ public class NeuralTesting {
 		value.add(1);
 		output.put(key, value);
 		
-		Population pop = new Population(9, 7, 1);
-		Evolution foo = new Evolution(output,pop);
-		foo.run();
+		//Population pop = new Population(9, 7, 1);
+		//Evolution foo = new Evolution(output,pop);
+		//foo.run();
 
 	}
 
