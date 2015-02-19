@@ -48,11 +48,17 @@ public class Population {
 	 * Takes whatever agents have been selected for the next cycle, and 
 	 * creates a new world with these specimens as the population.
 	 */
-	public boolean finalizeCycle();
+	public boolean finalizeCycle() {
+		return false;
+	}
 	
-	public double getFitnessSum();
+	public double getFitnessSum() {
+		return 0;
+	}
 	
-	public double getFitness(int index);
+	public double getFitness(int index) {
+		return index;
+	}
 
 	public World getWorld() {
 		return world;
