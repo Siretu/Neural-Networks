@@ -10,7 +10,7 @@ public class Neuron {
 		if(DEBUGGING_NEURON) System.out.println(s);
 	}
 	
-	private ArrayList<Axon> inputs;
+	private ArrayList<Axon> inputs;	//NEEDS to stay an ordered collection
 	private double threshold;
 	private Random generator;
 	
@@ -25,11 +25,14 @@ public class Neuron {
 		this.threshold = threshold;
 	}
 	
-	//deep copy constructor
-	//XXX: DOES NOT COPY AXON LINKS - do this manually, since you need to point to other neurons
+	/**
+	 * copy constructor
+	 * XXX: DOES NOT COPY AXON LINKS - 
+	 * do this manually, since you need to point to other neurons
+	 */
 	public Neuron(Neuron n){
-		
-
+		this();
+		threshold = n.threshold;
 	}
 	
 	public ArrayList<Axon> getInputs() {
