@@ -16,10 +16,10 @@ public class Population {
 	private World world;
 	
 	public void evolveCycle(){
-		breedAvg();
-		breedMix();
-		evolve();
 		survive();
+		evolve();
+		breedMix();
+		breedAvg();
 		finalizeCycle();
 	}
 	
