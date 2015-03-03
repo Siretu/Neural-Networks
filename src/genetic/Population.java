@@ -20,7 +20,6 @@ public class Population {
 		breedMix();
 		evolve();
 		survive();
-		finalizeCycle();
 	}
 	
 	public void breedMix(){breedMix(1-percBreedAvg);}
@@ -42,14 +41,6 @@ public class Population {
 	
 	public void survive(double perc){
 		
-	}
-	
-	/**
-	 * Takes whatever agents have been selected for the next cycle, and 
-	 * creates a new world with these specimens as the population.
-	 */
-	public boolean finalizeCycle() {
-		return false;
 	}
 	
 	public double getFitnessSum() {
