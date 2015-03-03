@@ -2,6 +2,7 @@ package genetic;
 
 import java.util.ArrayList;
 import java.util.Collection;
+import java.util.Collections;
 
 import environment.*;
 
@@ -15,17 +16,20 @@ public class Population {
 	
 	private World world;
 	
-	public void evolveCycle(){
+	public void evolveCycle() {
+		kill();
 		breedAvg();
 		breedMix();
 		evolve();
-		survive();
 	}
 	
 	public void breedMix(){breedMix(1-percBreedAvg);}
 	public void breedAvg(){breedAvg(percBreedAvg);}
 	public void evolve(){evolve(percMutating);}
-	public void survive(){survive(percSurviving);}
+	
+	public void kill() {
+		Collections.sort(world.getAgents(),Collections.reverseOrder());
+	}
 	
 	public void breedMix(double perc){
 		
@@ -36,10 +40,6 @@ public class Population {
 	}
 	
 	public void evolve(double perc){
-		
-	}
-	
-	public void survive(double perc){
 		
 	}
 	

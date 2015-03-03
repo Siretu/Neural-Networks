@@ -6,7 +6,7 @@ import neuralnetwork.InvalidInputLayerException;
 import neuralnetwork.Network;
 import environment.World;
 
-public class Agent {
+public class Agent implements Comparable<Agent>{
 	public static final int START_FUNDS = 10000;
 	
 	private Network network;
@@ -103,5 +103,13 @@ public class Agent {
 	public void setWorld(World world) {
 		this.world = world;
 	}
+	
+    @Override
+    public int compareTo(Agent other){
+        // compareTo should return < 0 if this is supposed to be
+        // less than other, > 0 if this is supposed to be greater than 
+        // other and 0 if they are supposed to be equal
+    	return (int) (getFitness() - other.getFitness());
+    }
 	
 }
