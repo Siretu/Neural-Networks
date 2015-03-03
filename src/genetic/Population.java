@@ -70,11 +70,10 @@ public class Population {
 				for (int input = 0; input < currNeuron.getInputs().size(); ++input) {
 					Axon currAxon = currNeuron.getInputs().get(input);
 					double weight = 0;
-					if (Math.random() > 0.5) {
-						weight = a.getNetwork().getLayer(layer).get(node).getInputs().get(input).getWeight();
-					} else {
-						weight = b.getNetwork().getLayer(layer).get(node).getInputs().get(input).getWeight();
-					}
+					double weight1 = a.getNetwork().getLayer(layer).get(node).getInputs().get(input).getWeight();
+					double weight2 = b.getNetwork().getLayer(layer).get(node).getInputs().get(input).getWeight();
+
+					weight = (weight1 + weight2) / 2;
 					c.getNetwork().getLayer(layer).get(node).getInputs().get(input).setWeight(weight);
 				}
 			}
