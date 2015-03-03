@@ -20,9 +20,5 @@ public class ConstantInput extends Neuron{
 	public void setValue(int v){
 		value = v;
 	}
-	
-	@Override
-	public int output(){
-		return value;
-	}
+
 }

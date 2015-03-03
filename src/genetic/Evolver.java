@@ -13,7 +13,7 @@ public class Evolver {
 			pop.run();
 			
 			pop.evolveCycle();
-			System.out.println(pop.getAgents().get(0).getFitness());
+			
 			//nomoreloops = true;
 		} while(!nomoreloops);
 	}

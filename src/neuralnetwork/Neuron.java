@@ -13,6 +13,7 @@ public class Neuron {
 	private ArrayList<Axon> inputs;	//NEEDS to stay an ordered collection
 	private double threshold;
 	private Random generator;
+	private int value;
 	
 	public Neuron(){
 		generator = new Random();
@@ -56,6 +57,11 @@ public class Neuron {
 	}
 
 	public int output(){
+		return value;
+	}
+	
+	
+	public void setValue(){
 		double activation = 0;
 		
 		// Measure weights from all neurons.
@@ -65,10 +71,10 @@ public class Neuron {
 		
 		if(activation >= threshold){
 			debug_println("Activation: "+activation + " | Threshold: "+threshold);
-			return 1;
+			value = 1;
 		} else {
 			debug_println("Threshold: "+threshold + " | Activation: "+activation);
-			return 0;
+			value = 0;
 		}
 		
 	}

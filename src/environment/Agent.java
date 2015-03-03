@@ -1,6 +1,7 @@
 package environment;
 
 import java.util.ArrayList;
+import java.util.Arrays;
 
 import neuralnetwork.InvalidInputLayerException;
 import neuralnetwork.Network;
@@ -14,6 +15,8 @@ public class Agent implements Comparable<Agent>{
 	private World world;
 	private double funds;
 	
+	public ArrayList<Integer> choices;
+	
 	public Agent() {
 		this(new Network()); 
 	}
@@ -23,8 +26,9 @@ public class Agent implements Comparable<Agent>{
 	}
 
 	public Agent(Network n) {
+		choices = new ArrayList<Integer>();
 		funds = START_FUNDS;
-		setNetwork(n);
+		network = new Network(n);
 		setStocks(new ArrayList<Double>(World.NR_STOCKS));
 		for (int i = 0; i < World.NR_STOCKS; ++i) {
 			stocks.add(0.0);
@@ -32,9 +36,10 @@ public class Agent implements Comparable<Agent>{
 	}
 
 	public void reset() {
+		choices.clear();
 		funds = START_FUNDS;
 		for (int i = 0; i < World.NR_STOCKS; ++i) {
-			stocks.add(0.0);
+			stocks.set(i,0.0);
 		}
 	}
 	
@@ -50,10 +55,12 @@ public class Agent implements Comparable<Agent>{
 			}
 			
 			/* TODO: Make this non-binary (e.g 0-0.3 = buy, 0.7-1 = sell) */
-			if (output == 0) {
+			if (output == 1) {
 				buy(x);
-			} else if (output == 1) {
+				choices.add(1);
+			} else if (output == 0) {
 				sell(x);
+				choices.add(0);
 			}
 			
 		}
@@ -66,7 +73,6 @@ public class Agent implements Comparable<Agent>{
 			double goal = Math.min(funds, START_FUNDS/world.NR_STOCKS);
 			
 			stocks.set(stock, goal / currentPrice);
-			
 			funds -= goal;
 		}
 	}
@@ -127,7 +133,7 @@ public class Agent implements Comparable<Agent>{
     }
     
     public String toString() {
-    	return "" + getFitness();
+    	return getFitness() + ": " + Arrays.toString(choices.toArray());
     }
 	
 }

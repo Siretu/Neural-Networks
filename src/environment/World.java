@@ -8,8 +8,8 @@ import java.util.Scanner;
 public class World {
 	private static final String HISTORY_FILENAME = "history";
 	public static final int NR_STOCKS = 1;
-	public static final int HISTORY_SIZE = 52;
-	public static final int INPUT_SIZE = 20;
+	public static final int HISTORY_SIZE = 105;
+	public static final int INPUT_SIZE = 30;
 	public static final int NR_AGENTS = 200; //keep multiple of 100 to avoid percentile issues
 	
 	private ArrayList<Agent> agents;

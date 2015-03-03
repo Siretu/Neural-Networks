@@ -27,7 +27,12 @@ public class Population {
 	public void evolveCycle() {
 		kill();
 		breed();
-		evolve();
+		mutate();
+//		System.out.println("-------");
+		System.out.println(getAgents().get(0));
+//		System.out.println(getAgents().get(1));
+//		System.out.println(getAgents().get(2));
+//		System.out.println(getAgents().get(3));
 		world.reset();
 	}
 	
@@ -53,14 +58,14 @@ public class Population {
 		while (insertIndex < world.getAgents().size()) {
 			Agent a = roulette();
 			Agent b = roulette();
-			Agent c = breedMix(a,b);
+			Agent c = breedAgents(a,b);
 			world.getAgents().set(insertIndex, c);
 			++insertIndex;
 		}
 
 	}
 	
-	public Agent breedMix(Agent a, Agent b){
+	public Agent breedAgents(Agent a, Agent b){
 		Agent c = new Agent(a);
 		c.setWorld(a.getWorld());
 		for (int layer = 0; layer < a.getNetwork().getLayers().size() - 1; ++layer) {
@@ -69,11 +74,15 @@ public class Population {
 				Neuron currNeuron = currLayer.get(node);
 				for (int input = 0; input < currNeuron.getInputs().size(); ++input) {
 					Axon currAxon = currNeuron.getInputs().get(input);
-					double weight = 0;
+					double weight;
 					double weight1 = a.getNetwork().getLayer(layer).get(node).getInputs().get(input).getWeight();
 					double weight2 = b.getNetwork().getLayer(layer).get(node).getInputs().get(input).getWeight();
-
-					weight = (weight1 + weight2) / 2;
+					
+					if (Math.random() < percBreedAvg) {
+						weight = breedAvg(weight1, weight2);
+					} else {
+						weight = breedMix(weight1, weight2);
+					}
 					c.getNetwork().getLayer(layer).get(node).getInputs().get(input).setWeight(weight);
 				}
 			}
@@ -82,20 +91,37 @@ public class Population {
 		return c;
 	}
 	
-	public Agent breedAvg(Agent a, Agent b){
-		return null;
+	public double breedMix(double w1, double w2) {
+		if (Math.random() > 0.5) {
+			return w1;
+		} else {
+			return w2;
+		}
 	}
 	
-	public void evolve(){
+	public double breedAvg(double w1, double w2) {
+		return (w1+w2)/2;
+	}
+	
+	public void mutate(){
 		for (Agent a : world.getAgents()) {
 			if (Math.random() < percMutating){
-				evolveAgent(a);
+				mutateAgent(a);
 			}
 		}
 	}
 	
-	public void evolveAgent(Agent a) {
-		
+	public void mutateAgent(Agent a) {
+		for (int layer = 0; layer < a.getNetwork().getLayers().size() - 1; ++layer) {
+			ArrayList<Neuron> currLayer = a.getNetwork().getLayer(layer);
+			for (int node = 0; node < currLayer.size(); ++node) {
+				Neuron currNeuron = currLayer.get(node);
+				for (int input = 0; input < currNeuron.getInputs().size(); ++input) {
+					Axon currAxon = currNeuron.getInputs().get(input);
+					currAxon.setWeight(currAxon.getWeight() + (Math.random()-0.5) * 15);
+				}
+			}
+		}
 	}
 	
 	public double getFitnessSum() {

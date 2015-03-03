@@ -16,7 +16,10 @@ public class Network{
 		maxWeight = 100;
 		generator = new Random();
 		for (int i = 0; i < World.INPUT_SIZE;++i) {
-			addNeuron(2, new ConstantInput());
+			addNeuron(3, new ConstantInput());
+		}
+		for (int i = 0; i < 10 ;++i) {
+			addNeuron(2, new Neuron());
 		}
 		for (int i = 0; i < 10 ;++i) {
 			addNeuron(1, new Neuron());
@@ -45,7 +48,7 @@ public class Network{
 			ArrayList<Neuron> aln = temp.get(i_);
 			for(Neuron nn : aln){
 				Neuron tempneu = new Neuron(nn);
-				aln.add(tempneu);
+				//aln.add(tempneu);
 				copyNeuronLinksToLayer(tempneu, nn, i_+1);
 			}
 		}
@@ -107,7 +110,11 @@ public class Network{
 			} else {
 				throw new InvalidInputLayerException("");
 			}
-
+		}
+		for (int i = layers.size() - 2; i > 0; --i) {
+			for (int j = 0; j < layers.get(i).size(); ++j) {
+				layers.get(i).get(j).setValue();
+			}
 		}
 	}
 
