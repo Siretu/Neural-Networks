@@ -20,6 +20,12 @@ public class Network{
 		this.maxWeight = maxWeight;
 	}
 	
+	/**
+	 * Copy constructor - deep copies the given network.
+	 * 
+	 * The created network should be 'safe', i.e. not contain
+	 * any references to the copied network.
+	 */
 	public Network(Network n){
 		this();
 		maxWeight = n.maxWeight;
@@ -30,9 +36,26 @@ public class Network{
 			for(Neuron nn : aln){
 				Neuron tempneu = new Neuron(nn);
 				aln.add(tempneu);
-				//TODO: add links to previous layer
+				copyNeuronLinksToLayer(tempneu, nn, i_+1);
 			}
-			
+		}
+	}
+	
+	/**
+	 * Helper function to link a given neuron to the
+	 * given layer, using the weights of the old neuron.
+	 * 
+	 * Assumes that the layer in question has exactly the 
+	 * same number of neurons as the corresponding layer
+	 * in the copied network.
+	 */
+	private void copyNeuronLinksToLayer(Neuron active, Neuron old, int layer){
+		if(layer >= layers.size()) return;
+		ArrayList<Neuron> linkto = layers.get(layer);
+		int i = 0;
+		for(Axon ax : old.getInputs()){
+			active.addInput(linkto.get(i), ax.getWeight());
+			++i;
 		}
 	}
 
