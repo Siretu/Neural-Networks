@@ -3,7 +3,7 @@ package genetic;
 
 public class Evolver {
 	
-	Population pop;
+	Population pop = new Population();
 
 	
 	
@@ -13,8 +13,8 @@ public class Evolver {
 			pop.run();
 			
 			pop.evolveCycle();
-			
-			nomoreloops = true;
-		}while(!nomoreloops);
+			System.out.println(pop.getAgents().get(0).getFitness());
+			//nomoreloops = true;
+		} while(!nomoreloops);
 	}
 }

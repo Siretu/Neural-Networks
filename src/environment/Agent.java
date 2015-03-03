@@ -17,13 +17,27 @@ public class Agent implements Comparable<Agent>{
 	public Agent() {
 		this(new Network()); 
 	}
+	
+	public Agent(Agent a) {
+		this(a.getNetwork());
+	}
 
 	public Agent(Network n) {
 		funds = START_FUNDS;
 		setNetwork(n);
 		setStocks(new ArrayList<Double>(World.NR_STOCKS));
+		for (int i = 0; i < World.NR_STOCKS; ++i) {
+			stocks.add(0.0);
+		}
 	}
 
+	public void reset() {
+		funds = START_FUNDS;
+		for (int i = 0; i < World.NR_STOCKS; ++i) {
+			stocks.add(0.0);
+		}
+	}
+	
 	public void act () {
 		for (int x = 0; x < world.NR_STOCKS; x++) {
 			ArrayList<Integer> history = world.getHistory(x);
@@ -110,6 +124,10 @@ public class Agent implements Comparable<Agent>{
         // less than other, > 0 if this is supposed to be greater than 
         // other and 0 if they are supposed to be equal
     	return (int) (getFitness() - other.getFitness());
+    }
+    
+    public String toString() {
+    	return "" + getFitness();
     }
 	
 }

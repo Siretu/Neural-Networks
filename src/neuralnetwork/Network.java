@@ -3,6 +3,8 @@ package neuralnetwork;
 import java.util.ArrayList;
 import java.util.Random;
 
+import environment.World;
+
 
 public class Network{
 	private ArrayList<ArrayList<Neuron>> layers;
@@ -13,6 +15,14 @@ public class Network{
 		layers = new ArrayList<ArrayList<Neuron>>();
 		maxWeight = 100;
 		generator = new Random();
+		for (int i = 0; i < World.INPUT_SIZE;++i) {
+			addNeuron(2, new ConstantInput());
+		}
+		for (int i = 0; i < 10 ;++i) {
+			addNeuron(1, new Neuron());
+		}
+		addNeuron(0, new Neuron());
+
 	}
 
 	public Network(int maxWeight){
