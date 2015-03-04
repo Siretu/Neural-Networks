@@ -62,6 +62,9 @@ public class Agent implements Comparable<Agent>{
 				sell(x);
 				choices.add(0);
 			}
+			if (choices.size() > 1 && choices.get(choices.size()-1) != choices.get(choices.size()-2)) {
+				System.out.println("WHAT?");
+			}
 			
 		}
 	}

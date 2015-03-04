@@ -28,8 +28,9 @@ public class Population {
 		kill();
 		breed();
 		mutate();
-//		System.out.println("-------");
+		System.out.println("-------");
 		System.out.println(getAgents().get(0));
+		System.out.println(getAgents().get(99));
 //		System.out.println(getAgents().get(1));
 //		System.out.println(getAgents().get(2));
 //		System.out.println(getAgents().get(3));

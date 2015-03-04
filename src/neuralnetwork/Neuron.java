@@ -5,7 +5,7 @@ import java.util.ArrayList;
 import java.util.Random;
 
 public class Neuron {
-	private static final boolean DEBUGGING_NEURON = false;
+	private static final boolean DEBUGGING_NEURON = true;
 	private static void debug_println(String s){
 		if(DEBUGGING_NEURON) System.out.println(s);
 	}

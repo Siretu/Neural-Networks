@@ -111,7 +111,7 @@ public class Network{
 				throw new InvalidInputLayerException("");
 			}
 		}
-		for (int i = layers.size() - 2; i > 0; --i) {
+		for (int i = layers.size() - 2; i >= 0; --i) {
 			for (int j = 0; j < layers.get(i).size(); ++j) {
 				layers.get(i).get(j).setValue();
 			}
