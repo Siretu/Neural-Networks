@@ -2,10 +2,11 @@ package neuralnetwork;
 
 
 import java.util.ArrayList;
+import java.util.Arrays;
 import java.util.Random;
 
 public class Neuron {
-	private static final boolean DEBUGGING_NEURON = true;
+	private static final boolean DEBUGGING_NEURON = false;
 	private static void debug_println(String s){
 		if(DEBUGGING_NEURON) System.out.println(s);
 	}
@@ -61,9 +62,24 @@ public class Neuron {
 	}
 	
 	
-	public void setValue(){
+	public void setValue(int i) {
+		value = i;
+	}
+	
+	public void setValue(boolean debug){
 		double activation = 0;
 		
+		if (debug) {
+			ArrayList<Integer> result = new ArrayList<Integer>();
+			ArrayList<Double> result2 = new ArrayList<Double>();
+			for (Axon i : inputs) {
+				result.add(i.getNeuron().output());
+				result2.add(i.getWeight());
+			}
+//			System.out.println(Arrays.toString(result.toArray()));
+//			System.out.println(Arrays.toString(result2.toArray()));
+//			System.out.println(threshold);
+		}
 		// Measure weights from all neurons.
 		for(Axon i : inputs){
 			activation += i.getWeight()*i.getNeuron().output();

@@ -1,6 +1,7 @@
 package genetic;
 
 import java.util.ArrayList;
+import java.util.Arrays;
 import java.util.Collection;
 import java.util.Collections;
 
@@ -29,8 +30,15 @@ public class Population {
 		breed();
 		mutate();
 		System.out.println("-------");
-		System.out.println(getAgents().get(0));
-		System.out.println(getAgents().get(99));
+		//System.out.println(getAgents().get(0));
+		//System.out.println(getAgents().get(99));
+		ArrayList<Double> result = new ArrayList<Double>();
+		for (Agent a : getAgents()) {
+			if (result.indexOf(a.getFitness()) == -1) {
+				result.add(a.getFitness());
+			}
+		}
+		System.out.println(Arrays.toString(result.toArray()));
 //		System.out.println(getAgents().get(1));
 //		System.out.println(getAgents().get(2));
 //		System.out.println(getAgents().get(3));

@@ -1,6 +1,7 @@
 package neuralnetwork;
 
 import java.util.ArrayList;
+import java.util.Arrays;
 import java.util.Random;
 
 import environment.World;
@@ -10,13 +11,15 @@ public class Network{
 	private ArrayList<ArrayList<Neuron>> layers;
 	private int maxWeight;
 	private Random generator;
+	
+	public int count = 0;
 
 	public Network(){
 		layers = new ArrayList<ArrayList<Neuron>>();
 		maxWeight = 100;
 		generator = new Random();
-		for (int i = 0; i < World.INPUT_SIZE;++i) {
-			addNeuron(3, new ConstantInput());
+		for (int i = 0; i <= World.INPUT_SIZE;++i) {
+			addNeuron(3, new Neuron());
 		}
 		for (int i = 0; i < 10 ;++i) {
 			addNeuron(2, new Neuron());
@@ -101,19 +104,28 @@ public class Network{
 		}
 	}
 
-	public void input(ArrayList<Integer> input) throws InvalidInputLayerException{
+	public void input(ArrayList<Integer> input,int id) throws InvalidInputLayerException{
 		// TODO: Figure out what this actually does and comment it properly.
 		ArrayList<Neuron> inputLayer = layers.get(layers.size()-1);
 		for(int i = 0;i<inputLayer.size();i++){
-			if(inputLayer.get(i).getClass().equals(ConstantInput.class)){
-				((ConstantInput)(inputLayer.get(i))).setValue(input.get(i));
-			} else {
-				throw new InvalidInputLayerException("");
-			}
+			inputLayer.get(i).setValue(input.get(i));
 		}
+//		ArrayList<Integer> result = new ArrayList<Integer>();
+//		for (Neuron n : inputLayer) {
+//			result.add(n.output());
+//		}
+//		System.out.println("a: " + Arrays.toString(input.toArray()));
+//		System.out.println("b: " + Arrays.toString(result.toArray()));
 		for (int i = layers.size() - 2; i >= 0; --i) {
 			for (int j = 0; j < layers.get(i).size(); ++j) {
-				layers.get(i).get(j).setValue();
+				boolean debug = false;
+				if (i == layers.size() - 2 && j == 0 && id == 0) {
+//					System.out.println(count);
+					count++;
+					debug = true;
+					
+				}
+				layers.get(i).get(j).setValue(debug);
 			}
 		}
 	}

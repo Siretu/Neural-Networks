@@ -43,12 +43,12 @@ public class Agent implements Comparable<Agent>{
 		}
 	}
 	
-	public void act () {
+	public void act (int id) {
 		for (int x = 0; x < world.NR_STOCKS; x++) {
 			ArrayList<Integer> history = world.getHistory(x);
 			int output = 0;
 			try {
-				network.input(history);
+				network.input(history,id);
 				output = network.output(0);
 			} catch (InvalidInputLayerException e) {
 				e.printStackTrace();
@@ -63,7 +63,7 @@ public class Agent implements Comparable<Agent>{
 				choices.add(0);
 			}
 			if (choices.size() > 1 && choices.get(choices.size()-1) != choices.get(choices.size()-2)) {
-				System.out.println("WHAT?");
+//				System.out.println("WHAT?");
 			}
 			
 		}

@@ -71,8 +71,10 @@ public class World {
 	}
 	
 	private void tick() {
+		int i = 0;
 		for (Agent a : agents) {
-			a.act();
+			a.act(i);
+			++i;
 		}
 	}
 	
