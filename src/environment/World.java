@@ -6,11 +6,11 @@ import java.util.ArrayList;
 import java.util.Scanner;
 
 public class World {
-	private static final String HISTORY_FILENAME = "history";
-	public static final int NR_STOCKS = 1;
+	private static final String HISTORY_PREFIX = "history";
+	public static final int NR_STOCKS = 3;
 	public static final int HISTORY_SIZE = 105;
 	public static final int INPUT_SIZE = 30;
-	public static final int NR_AGENTS = 200; //keep multiple of 100 to avoid percentile issues
+	public static final int NR_AGENTS = 300; //keep multiple of 100 to avoid percentile issues
 	
 	private ArrayList<Agent> agents;
 	public double[][] stockHistory;
@@ -30,7 +30,10 @@ public class World {
 			agents.add(a);
 		}
 		
-		stockHistory[0] = parseHistory();
+		for (int i = 0; i < NR_STOCKS; ++i) {
+			stockHistory[i] = parseHistory(i);	
+		}
+		
 	}
 	
 	public void reset() {
@@ -40,10 +43,10 @@ public class World {
 		}
 	}
 	
-	public static double[] parseHistory() {
+	public static double[] parseHistory(int id) {
 		ArrayList<Double> result = new ArrayList<Double>();
 		try {
-			Scanner in = new Scanner(new FileReader(HISTORY_FILENAME));
+			Scanner in = new Scanner(new FileReader(HISTORY_PREFIX + id));
 			while (in.hasNextLine()){
 				String line = in.nextLine();
 				String[] segments = line.split(",");
@@ -52,7 +55,7 @@ public class World {
 			in.close();
 		} catch (FileNotFoundException e) {
 			// TODO: Handle file not found
-			System.err.println("File not found: "+HISTORY_FILENAME);
+			System.err.println("File not found: "+HISTORY_PREFIX);
 			e.printStackTrace();
 		}
 		double[] result2 = new double[result.size()];
@@ -78,11 +81,11 @@ public class World {
 		}
 	}
 	
-	public ArrayList<Integer> getHistory(int stock) {
-		ArrayList<Integer> prices = new ArrayList<Integer>(INPUT_SIZE);
+	public ArrayList<Double> getHistory(int stock) {
+		ArrayList<Double> prices = new ArrayList<Double>(INPUT_SIZE);
 		int j = 0;
 		for (int i = currentTick - INPUT_SIZE; i <= currentTick; i++) {
-			prices.add((int)stockHistory[stock][i]);	// TODO: We should probably use doubles. Neural network only handles ints though. Fix
+			prices.add(stockHistory[stock][i]);
 			j += 1;
 		}
 		return prices;
@@ -110,4 +113,7 @@ public class World {
 		agents.add(a);
 	}
 	
+	public int getCurrentTick() {
+		return currentTick;
+	}
 }

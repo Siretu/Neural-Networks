@@ -12,8 +12,8 @@ import environment.*;
 
 public class Population {
 	public static final double percBreedAvg = 0.0;	// We can either breed with mix or avg. This determines amount bred with avg.
-	public static final double percSurviving = 0.5;	// This many total agents survive
-	public static final double percMutating = 0.2;	// Out of the surviving agents, this many mutate.
+	public static final double percSurviving = 0.7;	// This many total agents survive
+	public static final double percMutating = 0.05;	// Out of the surviving agents, this many mutate.
 	
 	protected ArrayList<Agent> populationAgents = new ArrayList<Agent>(World.NR_AGENTS);
 	protected ArrayList<Agent> selectedSpecimens = new ArrayList<Agent>(World.NR_AGENTS);
@@ -30,18 +30,7 @@ public class Population {
 		breed();
 		mutate();
 		System.out.println("-------");
-		//System.out.println(getAgents().get(0));
-		//System.out.println(getAgents().get(99));
-		ArrayList<Double> result = new ArrayList<Double>();
-		for (Agent a : getAgents()) {
-			if (result.indexOf(a.getFitness()) == -1) {
-				result.add(a.getFitness());
-			}
-		}
-		System.out.println(Arrays.toString(result.toArray()));
-//		System.out.println(getAgents().get(1));
-//		System.out.println(getAgents().get(2));
-//		System.out.println(getAgents().get(3));
+		System.out.println(getAgents().get(0));
 		world.reset();
 	}
 	
@@ -113,9 +102,14 @@ public class Population {
 	}
 	
 	public void mutate(){
-		for (Agent a : world.getAgents()) {
+//		for (Agent a : world.getAgents()) {
+//			if (Math.random() < percMutating){
+//				mutateAgent(a);
+//			}
+//		}
+		for (int i = 1; i < world.getAgents().size(); ++i) {
 			if (Math.random() < percMutating){
-				mutateAgent(a);
+				mutateAgent(world.getAgents().get(i));
 			}
 		}
 	}

@@ -14,12 +14,12 @@ public class Neuron {
 	private ArrayList<Axon> inputs;	//NEEDS to stay an ordered collection
 	private double threshold;
 	private Random generator;
-	private int value;
+	private double value;
 	
 	public Neuron(){
 		generator = new Random();
 		inputs = new ArrayList<Axon>();
-		threshold = generator.nextInt(200)-100;
+		//threshold = generator.nextInt(200)-100;
 	}
 	
 	public Neuron(double threshold){
@@ -57,41 +57,24 @@ public class Neuron {
 		return threshold;
 	}
 
-	public int output(){
+	public double output(){
 		return value;
 	}
 	
 	
-	public void setValue(int i) {
+	public void setValue(double i) {
 		value = i;
 	}
 	
-	public void setValue(boolean debug){
+	public void setValue(){
 		double activation = 0;
-		
-		if (debug) {
-			ArrayList<Integer> result = new ArrayList<Integer>();
-			ArrayList<Double> result2 = new ArrayList<Double>();
-			for (Axon i : inputs) {
-				result.add(i.getNeuron().output());
-				result2.add(i.getWeight());
-			}
-//			System.out.println(Arrays.toString(result.toArray()));
-//			System.out.println(Arrays.toString(result2.toArray()));
-//			System.out.println(threshold);
-		}
+
 		// Measure weights from all neurons.
 		for(Axon i : inputs){
 			activation += i.getWeight()*i.getNeuron().output();
 		}
 		
-		if(activation >= threshold){
-			debug_println("Activation: "+activation + " | Threshold: "+threshold);
-			value = 1;
-		} else {
-			debug_println("Threshold: "+threshold + " | Activation: "+activation);
-			value = 0;
-		}
+		value = activation / (1 + Math.abs(activation));
 		
 	}
 }

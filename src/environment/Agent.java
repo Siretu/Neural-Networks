@@ -16,6 +16,7 @@ public class Agent implements Comparable<Agent>{
 	private double funds;
 	
 	public ArrayList<Integer> choices;
+	public ArrayList<Integer> choices2;
 	
 	public Agent() {
 		this(new Network()); 
@@ -27,6 +28,7 @@ public class Agent implements Comparable<Agent>{
 
 	public Agent(Network n) {
 		choices = new ArrayList<Integer>();
+		choices2 = new ArrayList<Integer>();
 		funds = START_FUNDS;
 		network = new Network(n);
 		setStocks(new ArrayList<Double>(World.NR_STOCKS));
@@ -37,6 +39,7 @@ public class Agent implements Comparable<Agent>{
 
 	public void reset() {
 		choices.clear();
+		choices2.clear();
 		funds = START_FUNDS;
 		for (int i = 0; i < World.NR_STOCKS; ++i) {
 			stocks.set(i,0.0);
@@ -45,27 +48,32 @@ public class Agent implements Comparable<Agent>{
 	
 	public void act (int id) {
 		for (int x = 0; x < world.NR_STOCKS; x++) {
-			ArrayList<Integer> history = world.getHistory(x);
-			int output = 0;
+			ArrayList<Double> history = world.getHistory(x);
+			double output = 0;
 			try {
-				network.input(history,id);
+				network.input(history);
 				output = network.output(0);
 			} catch (InvalidInputLayerException e) {
 				e.printStackTrace();
 			}
-			
-			/* TODO: Make this non-binary (e.g 0-0.3 = buy, 0.7-1 = sell) */
-			if (output == 1) {
-				buy(x);
-				choices.add(1);
-			} else if (output == 0) {
-				sell(x);
-				choices.add(0);
+			if (x == 0) {
+				choices2.add(world.getCurrentTick());
+				if (output > 0.95) {
+					buy(x);
+					choices.add(2);
+				} else if (output < -0.95) {
+					sell(x);
+					choices.add(1);
+				} else {
+					choices.add(0);
+				}
+			} else {
+				if (output > 0.95) {
+					buy(x);
+				} else if (output < -0.95) {
+					sell(x);
+				}
 			}
-			if (choices.size() > 1 && choices.get(choices.size()-1) != choices.get(choices.size()-2)) {
-//				System.out.println("WHAT?");
-			}
-			
 		}
 	}
 	
@@ -136,7 +144,7 @@ public class Agent implements Comparable<Agent>{
     }
     
     public String toString() {
-    	return getFitness() + ": " + Arrays.toString(choices.toArray());
+    	return getFitness() + ": " + Arrays.toString(choices.toArray()) + "\n" + Arrays.toString(choices2.toArray());
     }
 	
 }
