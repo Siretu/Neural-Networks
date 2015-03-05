@@ -32,6 +32,13 @@ public class Population {
 		System.out.println("-------");
 		System.out.println(getAgents().get(0));
 		world.reset();
+		world.swapStocks();
+		World.NR_STOCKS = 1;
+		run();
+		System.out.println(getAgents().get(0));
+		world.reset();
+		world.swapStocks();
+		World.NR_STOCKS = 2;
 	}
 	
 	public void kill() {

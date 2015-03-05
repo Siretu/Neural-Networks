@@ -73,8 +73,13 @@ public class Neuron {
 		for(Axon i : inputs){
 			activation += i.getWeight()*i.getNeuron().output();
 		}
-		
-		value = activation / (1 + Math.abs(activation));
+		int A = -300;
+		int B = 300;
+		int a = -10;
+		int b = 10;
+		double result = (activation - A)*(b-a)/(B-A) + a;
+//		System.out.println(result);
+		value = result / (1 + Math.abs(result));
 		
 	}
 }

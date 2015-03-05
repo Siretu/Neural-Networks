@@ -7,18 +7,20 @@ import java.util.Scanner;
 
 public class World {
 	private static final String HISTORY_PREFIX = "history";
-	public static final int NR_STOCKS = 3;
+	public static int NR_STOCKS = 2;
 	public static final int HISTORY_SIZE = 105;
 	public static final int INPUT_SIZE = 30;
 	public static final int NR_AGENTS = 300; //keep multiple of 100 to avoid percentile issues
 	
 	private ArrayList<Agent> agents;
 	public double[][] stockHistory;
+	public double[][] stockHistoryBackup;
 	
 	private int currentTick;
 	
 	public World() {
 		stockHistory = new double[NR_STOCKS][HISTORY_SIZE];
+		stockHistoryBackup = new double[1][HISTORY_SIZE];
 		currentTick = INPUT_SIZE;
 		
 		agents = new ArrayList<Agent>(NR_AGENTS);
@@ -33,7 +35,14 @@ public class World {
 		for (int i = 0; i < NR_STOCKS; ++i) {
 			stockHistory[i] = parseHistory(i);	
 		}
-		
+		stockHistoryBackup[0] = parseHistory(2);
+
+	}
+	
+	public void swapStocks() {
+		double[][] temp = stockHistory;
+		stockHistory = stockHistoryBackup;
+		stockHistoryBackup = temp;
 	}
 	
 	public void reset() {
@@ -57,6 +66,15 @@ public class World {
 			// TODO: Handle file not found
 			System.err.println("File not found: "+HISTORY_PREFIX);
 			e.printStackTrace();
+		}
+		Double max = 0.0;
+		for (Double d : result) {
+			if (d > max) {
+				max = d;
+			}
+		}
+		for (int i = 0; i < result.size(); ++i) {
+			result.set(i,result.get(i)*(1/max));
 		}
 		double[] result2 = new double[result.size()];
 		for (int i = 0; i < result.size(); i++) {

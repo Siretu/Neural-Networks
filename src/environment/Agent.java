@@ -47,7 +47,7 @@ public class Agent implements Comparable<Agent>{
 	}
 	
 	public void act (int id) {
-		for (int x = 0; x < world.NR_STOCKS; x++) {
+		for (int x = 0; x < World.NR_STOCKS; x++) {
 			ArrayList<Double> history = world.getHistory(x);
 			double output = 0;
 			try {
@@ -56,23 +56,14 @@ public class Agent implements Comparable<Agent>{
 			} catch (InvalidInputLayerException e) {
 				e.printStackTrace();
 			}
-			if (x == 0) {
-				choices2.add(world.getCurrentTick());
-				if (output > 0.95) {
-					buy(x);
-					choices.add(2);
-				} else if (output < -0.95) {
-					sell(x);
-					choices.add(1);
-				} else {
-					choices.add(0);
-				}
+			if (output > 0.25) {
+				buy(x);
+				choices.add(2);
+			} else if (output < -0.25) {
+				sell(x);
+				choices.add(1);
 			} else {
-				if (output > 0.95) {
-					buy(x);
-				} else if (output < -0.95) {
-					sell(x);
-				}
+				choices.add(0);
 			}
 		}
 	}
@@ -144,7 +135,7 @@ public class Agent implements Comparable<Agent>{
     }
     
     public String toString() {
-    	return getFitness() + ": " + Arrays.toString(choices.toArray()) + "\n" + Arrays.toString(choices2.toArray());
+    	return getFitness() + ": " + Arrays.toString(choices.toArray());// + "\n" + Arrays.toString(choices2.toArray());
     }
 	
 }
