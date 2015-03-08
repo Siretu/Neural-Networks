@@ -39,6 +39,7 @@ public class Population {
 		world.reset();
 		world.swapStocks();
 		World.NR_STOCKS = 2;
+		
 	}
 	
 	public void kill() {
