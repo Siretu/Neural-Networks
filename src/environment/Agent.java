@@ -49,17 +49,18 @@ public class Agent implements Comparable<Agent>{
 	public void act (int id) {
 		for (int x = 0; x < World.NR_STOCKS; x++) {
 			ArrayList<Double> history = world.getHistory(x);
-			double output = 0;
-			try {
-				network.input(history);
-				output = network.output(0);
-			} catch (InvalidInputLayerException e) {
-				e.printStackTrace();
-			}
-			if (output > 0.25) {
+			
+			network.input(history);
+			double output1 = network.output(0);
+			double output2 = network.output(1);
+//			System.out.println(output1 + " >< " + output2);
+//			System.out.println(id);
+			if (output1 > output2) {
+//				System.out.println("buy");
 				buy(x);
 				choices.add(2);
-			} else if (output < -0.25) {
+			} else if (output1 < output2) {
+//				System.out.println("sell");
 				sell(x);
 				choices.add(1);
 			} else {

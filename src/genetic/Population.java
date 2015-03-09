@@ -31,11 +31,13 @@ public class Population {
 		mutate();
 		System.out.println("-------");
 		System.out.println(getAgents().get(0));
+//		System.out.println(world.getHistory(0));
 		world.reset();
 		world.swapStocks();
 		World.NR_STOCKS = 1;
 		run();
 		System.out.println(getAgents().get(0));
+//		System.out.println(world.getHistory(0));
 		world.reset();
 		world.swapStocks();
 		World.NR_STOCKS = 2;
@@ -129,7 +131,8 @@ public class Population {
 				Neuron currNeuron = currLayer.get(node);
 				for (int input = 0; input < currNeuron.getInputs().size(); ++input) {
 					Axon currAxon = currNeuron.getInputs().get(input);
-					currAxon.setWeight(currAxon.getWeight() + (Math.random()-0.5) * 15);
+					currAxon.setWeight(currAxon.getWeight() + (Math.random()-0.5));
+					
 				}
 			}
 		}

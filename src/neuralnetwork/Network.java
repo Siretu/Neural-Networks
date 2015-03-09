@@ -2,7 +2,6 @@ package neuralnetwork;
 
 import java.util.ArrayList;
 import java.util.Arrays;
-import java.util.Random;
 
 import environment.World;
 
@@ -10,13 +9,11 @@ import environment.World;
 public class Network{
 	private ArrayList<ArrayList<Neuron>> layers;
 	private int maxWeight;
-	private Random generator;
 	
 
 	public Network(){
 		layers = new ArrayList<ArrayList<Neuron>>();
-		maxWeight = 100;
-		generator = new Random();
+		maxWeight = 1;
 		for (int i = 0; i <= World.INPUT_SIZE;++i) {
 			addNeuron(3, new Neuron());
 		}
@@ -26,6 +23,7 @@ public class Network{
 		for (int i = 0; i < 15 ;++i) {
 			addNeuron(1, new Neuron());
 		}
+		addNeuron(0, new Neuron());
 		addNeuron(0, new Neuron());
 
 	}
@@ -98,7 +96,7 @@ public class Network{
 		layers.get(layer).add(n);
 		if(layer<layers.size()-1){
 			for(Neuron subnode : layers.get(layer+1)){
-				n.addInput(subnode, (generator.nextFloat()-0.5)*maxWeight);
+				n.addInput(subnode, (Math.random())*maxWeight);
 			}
 		}
 	}
@@ -116,7 +114,7 @@ public class Network{
 		}
 	}
 
-	public double output(int node) throws InvalidInputLayerException{
+	public double output(int node) {
 		return layers.get(0).get(node).output();
 	}
 

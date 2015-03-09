@@ -16,9 +16,13 @@ public class World {
 	public double[][] stockHistory;
 	public double[][] stockHistoryBackup;
 	
+	
+	public ArrayList<ArrayList<Double>> currentHistory;
+	
 	private int currentTick;
 	
 	public World() {
+		currentHistory = new ArrayList<ArrayList<Double>>();
 		stockHistory = new double[NR_STOCKS][HISTORY_SIZE];
 		stockHistoryBackup = new double[1][HISTORY_SIZE];
 		currentTick = INPUT_SIZE;
@@ -67,15 +71,15 @@ public class World {
 			System.err.println("File not found: "+HISTORY_PREFIX);
 			e.printStackTrace();
 		}
-		Double max = 0.0;
-		for (Double d : result) {
-			if (d > max) {
-				max = d;
-			}
-		}
-		for (int i = 0; i < result.size(); ++i) {
-			result.set(i,result.get(i)*(1/max));
-		}
+//		Double max = 0.0;
+//		for (Double d : result) {
+//			if (d > max) {
+//				max = d;
+//			}
+//		}
+//		for (int i = 0; i < result.size(); ++i) {
+//			result.set(i,result.get(i)*(1/max));
+//		}
 		double[] result2 = new double[result.size()];
 		for (int i = 0; i < result.size(); i++) {
 			result2[i] = result.get(i);
@@ -92,21 +96,32 @@ public class World {
 	}
 	
 	private void tick() {
+		currentHistory.clear();
+		
+		for (int stock = 0; stock < NR_STOCKS; ++stock) {
+			currentHistory.add(new ArrayList<Double>());
+			initializeHistory(stock);
+		}
 		int i = 0;
 		for (Agent a : agents) {
 			a.act(i);
 			++i;
 		}
+
 	}
 	
 	public ArrayList<Double> getHistory(int stock) {
+		return currentHistory.get(stock);
+	}
+	
+	public void initializeHistory(int stock) {
 		ArrayList<Double> prices = new ArrayList<Double>(INPUT_SIZE);
 		int j = 0;
 		for (int i = currentTick - INPUT_SIZE; i <= currentTick; i++) {
-			prices.add(stockHistory[stock][i]);
+			prices.add(stockHistory[stock][i]/stockHistory[stock][currentTick]);
 			j += 1;
 		}
-		return prices;
+		currentHistory.set(stock,prices);
 	}
 	
 	public double getPrice(int stock) {
