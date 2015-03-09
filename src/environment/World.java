@@ -8,7 +8,7 @@ import java.util.Scanner;
 public class World {
 	private static final String HISTORY_PREFIX = "history";
 	public static int NR_STOCKS = 2;
-	public static final int HISTORY_SIZE = 105;
+	public static final int HISTORY_SIZE = 262;
 	public static final int INPUT_SIZE = 30;
 	public static final int NR_AGENTS = 300; //keep multiple of 100 to avoid percentile issues
 	

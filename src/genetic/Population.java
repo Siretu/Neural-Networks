@@ -12,8 +12,8 @@ import environment.*;
 
 public class Population {
 	public static final double percBreedAvg = 0.0;	// We can either breed with mix or avg. This determines amount bred with avg.
-	public static final double percSurviving = 0.7;	// This many total agents survive
-	public static final double percMutating = 0.05;	// Out of the surviving agents, this many mutate.
+	public static final double percSurviving = 1.0;	// This many total agents survive
+	public static final double percMutating = 0.5;	// Out of the surviving agents, this many mutate.
 	
 	protected ArrayList<Agent> populationAgents = new ArrayList<Agent>(World.NR_AGENTS);
 	protected ArrayList<Agent> selectedSpecimens = new ArrayList<Agent>(World.NR_AGENTS);
