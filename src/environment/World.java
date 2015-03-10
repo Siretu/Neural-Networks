@@ -7,8 +7,9 @@ import java.util.Scanner;
 
 public class World {
 	private static final String HISTORY_PREFIX = "history";
-	public static int NR_STOCKS = 2;
-	public static final int HISTORY_SIZE = 262;
+	public static final int MAIN_NR_STOCKS = 16;
+	public static int NR_STOCKS = 16;
+	public static final int HISTORY_SIZE = 260;
 	public static final int INPUT_SIZE = 30;
 	public static final int NR_AGENTS = 300; //keep multiple of 100 to avoid percentile issues
 	
@@ -22,9 +23,10 @@ public class World {
 	private int currentTick;
 	
 	public World() {
+		World.NR_STOCKS = MAIN_NR_STOCKS;
 		currentHistory = new ArrayList<ArrayList<Double>>();
 		stockHistory = new double[NR_STOCKS][HISTORY_SIZE];
-		stockHistoryBackup = new double[1][HISTORY_SIZE];
+		stockHistoryBackup = new double[2][HISTORY_SIZE];
 		currentTick = INPUT_SIZE;
 		
 		agents = new ArrayList<Agent>(NR_AGENTS);
@@ -39,7 +41,8 @@ public class World {
 		for (int i = 0; i < NR_STOCKS; ++i) {
 			stockHistory[i] = parseHistory(i);	
 		}
-		stockHistoryBackup[0] = parseHistory(2);
+		stockHistoryBackup[0] = parseHistory(17);
+		stockHistoryBackup[1] = parseHistory(16);
 
 	}
 	
@@ -118,6 +121,7 @@ public class World {
 		ArrayList<Double> prices = new ArrayList<Double>(INPUT_SIZE);
 		int j = 0;
 		for (int i = currentTick - INPUT_SIZE; i <= currentTick; i++) {
+//			System.out.println(stock);
 			prices.add(stockHistory[stock][i]/stockHistory[stock][currentTick]);
 			j += 1;
 		}

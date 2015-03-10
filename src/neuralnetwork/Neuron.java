@@ -81,8 +81,8 @@ public class Neuron {
 //		double result = (activation - A)*(b-a)/(B-A) + a;
 		double result = activation;
 //		System.out.println(result);
-//		value = result / (1 + Math.abs(result));
-		value = activation;
+		value = result / (1 + Math.abs(result));
+//		value = activation;
 		
 	}
 }

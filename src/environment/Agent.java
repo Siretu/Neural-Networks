@@ -15,8 +15,8 @@ public class Agent implements Comparable<Agent>{
 	private World world;
 	private double funds;
 	
-	public ArrayList<Integer> choices;
-	public ArrayList<Integer> choices2;
+	public ArrayList<Character> choices;
+	public ArrayList<Character> choices2;
 	
 	public Agent() {
 		this(new Network()); 
@@ -27,8 +27,8 @@ public class Agent implements Comparable<Agent>{
 	}
 
 	public Agent(Network n) {
-		choices = new ArrayList<Integer>();
-		choices2 = new ArrayList<Integer>();
+		choices = new ArrayList<Character>();
+		choices2 = new ArrayList<Character>();
 		funds = START_FUNDS;
 		network = new Network(n);
 		setStocks(new ArrayList<Double>(World.NR_STOCKS));
@@ -52,19 +52,26 @@ public class Agent implements Comparable<Agent>{
 			
 			network.input(history);
 			double output1 = network.output(0);
-			double output2 = network.output(1);
-//			System.out.println(output1 + " >< " + output2);
+//			double output2 = network.output(1);
+//			System.out.println(output1);
 //			System.out.println(id);
-			if (output1 > output2) {
+			if (output1 > 0.1) {
 //				System.out.println("buy");
 				buy(x);
-				choices.add(2);
-			} else if (output1 < output2) {
+				funds = Math.max(0,funds-100);
+				if (x == 0) {
+					choices.add('b');
+				}
+			} else if (output1 < -0.1) {
 //				System.out.println("sell");
 				sell(x);
-				choices.add(1);
+				if (x == 0) {
+					choices.add('s');
+				}
 			} else {
-				choices.add(0);
+				if (x == 0) {
+					choices.add('0');
+				}
 			}
 		}
 	}

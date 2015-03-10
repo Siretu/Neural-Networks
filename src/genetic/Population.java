@@ -11,9 +11,9 @@ import neuralnetwork.Neuron;
 import environment.*;
 
 public class Population {
-	public static final double percBreedAvg = 0.0;	// We can either breed with mix or avg. This determines amount bred with avg.
-	public static final double percSurviving = 1.0;	// This many total agents survive
-	public static final double percMutating = 0.5;	// Out of the surviving agents, this many mutate.
+	public static final double percBreedAvg = 1.0;	// We can either breed with mix or avg. This determines amount bred with avg.
+	public static final double percSurviving = 0.5;	// This many total agents survive
+	public static final double percMutating = 0.1;	// Out of the surviving agents, this many mutate.
 	
 	protected ArrayList<Agent> populationAgents = new ArrayList<Agent>(World.NR_AGENTS);
 	protected ArrayList<Agent> selectedSpecimens = new ArrayList<Agent>(World.NR_AGENTS);
@@ -34,13 +34,13 @@ public class Population {
 //		System.out.println(world.getHistory(0));
 		world.reset();
 		world.swapStocks();
-		World.NR_STOCKS = 1;
+		World.NR_STOCKS = 2;
 		run();
 		System.out.println(getAgents().get(0));
 //		System.out.println(world.getHistory(0));
 		world.reset();
 		world.swapStocks();
-		World.NR_STOCKS = 2;
+		World.NR_STOCKS = World.MAIN_NR_STOCKS;
 		
 	}
 	

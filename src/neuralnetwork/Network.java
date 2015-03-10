@@ -24,7 +24,7 @@ public class Network{
 			addNeuron(1, new Neuron());
 		}
 		addNeuron(0, new Neuron());
-		addNeuron(0, new Neuron());
+//		addNeuron(0, new Neuron());
 
 	}
 
@@ -96,7 +96,7 @@ public class Network{
 		layers.get(layer).add(n);
 		if(layer<layers.size()-1){
 			for(Neuron subnode : layers.get(layer+1)){
-				n.addInput(subnode, (Math.random())*maxWeight);
+				n.addInput(subnode, (Math.random()-0.5)*maxWeight);
 			}
 		}
 	}
