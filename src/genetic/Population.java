@@ -28,15 +28,28 @@ public class Population {
 	public void evolveCycle() {
 		kill();
 		breed();
-		mutate();
+		
 		System.out.println("-------");
 		System.out.println(getAgents().get(0));
+		double top = getAgents().get(0).getFitness();
+		int perc = 0;
+		for (Agent a : getAgents()) {
+			if (a.getFitness() == top) {
+				perc++;
+			}
+		}
+		System.out.println(getAgents().get(1));
+		System.out.println(getAgents().get(2));
+		System.out.println(perc + " / " + getAgents().size());
+		mutate();
 //		System.out.println(world.getHistory(0));
 		world.reset();
 		world.swapStocks();
 		World.NR_STOCKS = 2;
 		run();
 		System.out.println(getAgents().get(0));
+		System.out.println(getAgents().get(1));
+		System.out.println(getAgents().get(2));
 //		System.out.println(world.getHistory(0));
 		world.reset();
 		world.swapStocks();
