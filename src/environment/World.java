@@ -6,6 +6,10 @@ import java.util.ArrayList;
 import java.util.Scanner;
 
 public class World {
+	
+	// Which data in the history file to use. Format: Ticker, Date (yyyymmdd), Open, High, Low, Close, Volume
+	private static final int dataIndex = 5;
+	
 	private static final String HISTORY_PREFIX = "history";
 	public static final int MAIN_NR_STOCKS = 16;
 	public static int NR_STOCKS = 16;
@@ -66,7 +70,7 @@ public class World {
 			while (in.hasNextLine()){
 				String line = in.nextLine();
 				String[] segments = line.split(",");
-				result.add(Double.parseDouble(segments[2]));
+				result.add(Double.parseDouble(segments[dataIndex]));
 			}
 			in.close();
 		} catch (FileNotFoundException e) {

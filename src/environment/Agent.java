@@ -58,7 +58,7 @@ public class Agent implements Comparable<Agent>{
 			if (output1 > 0.1) {
 //				System.out.println("buy");
 				buy(x);
-				funds = Math.max(0,funds-100);
+//				funds = Math.max(0,funds-500);
 				if (x == 0) {
 					choices.add('b');
 				}
@@ -69,8 +69,10 @@ public class Agent implements Comparable<Agent>{
 					choices.add('s');
 				}
 			} else {
+				sell(x);
 				if (x == 0) {
-					choices.add('0');
+					choices.add('s');
+					//choices.add('0');
 				}
 			}
 		}
