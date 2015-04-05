@@ -3,7 +3,6 @@ package environment;
 import java.util.ArrayList;
 import java.util.Arrays;
 
-import neuralnetwork.InvalidInputLayerException;
 import neuralnetwork.Network;
 import environment.World;
 
@@ -14,6 +13,8 @@ public class Agent implements Comparable<Agent>{
 	private ArrayList<Double> stocks;
 	private World world;
 	private double funds;
+	private int sales;
+	private int purchases;
 	
 	public ArrayList<Character> choices;
 	public ArrayList<Character> choices2;
@@ -29,6 +30,8 @@ public class Agent implements Comparable<Agent>{
 	public Agent(Network n) {
 		choices = new ArrayList<Character>();
 		choices2 = new ArrayList<Character>();
+		sales = 0;
+		purchases = 0;
 		funds = START_FUNDS;
 		network = new Network(n);
 		setStocks(new ArrayList<Double>(World.NR_STOCKS));
@@ -40,6 +43,8 @@ public class Agent implements Comparable<Agent>{
 	public void reset() {
 		choices.clear();
 		choices2.clear();
+		sales = 0;
+		purchases = 0;
 		funds = START_FUNDS;
 		for (int i = 0; i < World.NR_STOCKS; ++i) {
 			stocks.set(i,0.0);
@@ -59,6 +64,7 @@ public class Agent implements Comparable<Agent>{
 			if (output1 > 0.1) {
 //				System.out.println("buy");
 				buy(x);
+				purchases++;
 //				funds = Math.max(0,funds-100);
 				if (x == 0) {
 					choices.add('b');
@@ -66,14 +72,16 @@ public class Agent implements Comparable<Agent>{
 			} else if (output1 < -0.1) {
 //				System.out.println("sell");
 				sell(x);
+				sales++;
 				if (x == 0) {
 					choices.add('s');
 				}
 			} else {
 				sell(x);
+				sales++;
 				if (x == 0) {
 					choices.add('s');
-					//choices.add('0');
+//					choices.add('0');
 				}
 			}
 		}
@@ -100,10 +108,10 @@ public class Agent implements Comparable<Agent>{
 	
 	public double getFitness() {
 		double result = funds;
-		for (int i = 0; i < world.NR_STOCKS; i++) {
+		/*for (int i = 0; i < world.NR_STOCKS; i++) {
 			double currentPrice = world.getPrice(i);
 			result += stocks.get(i) * currentPrice;
-		}
+		}*/
 		return result;
 	}
 	
@@ -146,7 +154,7 @@ public class Agent implements Comparable<Agent>{
     }
     
     public String toString() {
-    	return getFitness() + ": " + Arrays.toString(choices.toArray());// + "\n" + Arrays.toString(choices2.toArray());
+    	return getFitness() + ": " + sales + "/" + purchases + " " + Arrays.toString(choices.toArray());// + "\n" + Arrays.toString(choices2.toArray());
     }
 	
 }

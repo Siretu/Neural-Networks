@@ -12,9 +12,9 @@ public class World {
 	
 	private static final String HISTORY_PATH = "historical/weekly/";
 	private static final String HISTORY_PREFIX = "history";
-	public static final int MAIN_NR_STOCKS = 16;
-	public static int NR_STOCKS = 16;
-	public static final int HISTORY_SIZE = 260;
+	public static final int MAIN_NR_STOCKS = 13;
+	public static int NR_STOCKS = 13;
+	public static final int HISTORY_SIZE = 200;
 	public static final int INPUT_SIZE = 20;
 	public static final int NR_AGENTS = 300; //keep multiple of 100 to avoid percentile issues
 	
@@ -31,7 +31,7 @@ public class World {
 		World.NR_STOCKS = MAIN_NR_STOCKS;
 		currentHistory = new ArrayList<ArrayList<Double>>();
 		stockHistory = new double[NR_STOCKS][HISTORY_SIZE];
-		stockHistoryBackup = new double[2][HISTORY_SIZE];
+		stockHistoryBackup = new double[NR_STOCKS][HISTORY_SIZE];
 		currentTick = INPUT_SIZE;
 		
 		agents = new ArrayList<Agent>(NR_AGENTS);
@@ -46,8 +46,9 @@ public class World {
 		for (int i = 0; i < NR_STOCKS; ++i) {
 			stockHistory[i] = parseHistory(i);	
 		}
-		//stockHistoryBackup[0] = parseHistory(17);
-		//stockHistoryBackup[1] = parseHistory(16);
+		for (int i = 0; i < NR_STOCKS; ++i) {
+			stockHistoryBackup[i] = parseHistory(13+i);	
+		}
 
 	}
 	

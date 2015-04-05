@@ -18,7 +18,7 @@ import genetic.Population;
 
 public class NeuralTesting {
 
-	public static void main(String[] args) throws InvalidInputLayerException {
+	public static void main(String[] args) {
 		Evolver e = new Evolver();
 		e.cycle();
 		//TODO: Neural Testing
