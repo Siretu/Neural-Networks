@@ -38,21 +38,21 @@ public class Population {
 				perc++;
 			}
 		}
-		System.out.println(getAgents().get(1));
-		System.out.println(getAgents().get(2));
-		System.out.println(perc + " / " + getAgents().size());
+//		System.out.println(getAgents().get(1));
+//		System.out.println(getAgents().get(2));
+//		System.out.println(perc + " / " + getAgents().size());
 		mutate();
 //		System.out.println(world.getHistory(0));
-		world.reset();
-		world.swapStocks();
-		World.NR_STOCKS = 2;
-		run();
-		System.out.println(getAgents().get(0));
-		System.out.println(getAgents().get(1));
-		System.out.println(getAgents().get(2));
+//		world.reset();
+//		world.swapStocks();
+//		World.NR_STOCKS = 2;
+//		run();
+//		System.out.println(getAgents().get(0));
+//		System.out.println(getAgents().get(1));
+//		System.out.println(getAgents().get(2));
 //		System.out.println(world.getHistory(0));
 		world.reset();
-		world.swapStocks();
+		//world.swapStocks();
 		World.NR_STOCKS = World.MAIN_NR_STOCKS;
 		
 	}

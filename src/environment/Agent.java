@@ -48,6 +48,7 @@ public class Agent implements Comparable<Agent>{
 	
 	public void act (int id) {
 		for (int x = 0; x < World.NR_STOCKS; x++) {
+
 			ArrayList<Double> history = world.getHistory(x);
 			
 			network.input(history);
@@ -58,7 +59,7 @@ public class Agent implements Comparable<Agent>{
 			if (output1 > 0.1) {
 //				System.out.println("buy");
 				buy(x);
-//				funds = Math.max(0,funds-500);
+//				funds = Math.max(0,funds-100);
 				if (x == 0) {
 					choices.add('b');
 				}

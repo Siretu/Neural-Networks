@@ -10,11 +10,12 @@ public class World {
 	// Which data in the history file to use. Format: Ticker, Date (yyyymmdd), Open, High, Low, Close, Volume
 	private static final int dataIndex = 5;
 	
+	private static final String HISTORY_PATH = "historical/weekly/";
 	private static final String HISTORY_PREFIX = "history";
 	public static final int MAIN_NR_STOCKS = 16;
 	public static int NR_STOCKS = 16;
 	public static final int HISTORY_SIZE = 260;
-	public static final int INPUT_SIZE = 30;
+	public static final int INPUT_SIZE = 20;
 	public static final int NR_AGENTS = 300; //keep multiple of 100 to avoid percentile issues
 	
 	private ArrayList<Agent> agents;
@@ -45,8 +46,8 @@ public class World {
 		for (int i = 0; i < NR_STOCKS; ++i) {
 			stockHistory[i] = parseHistory(i);	
 		}
-		stockHistoryBackup[0] = parseHistory(17);
-		stockHistoryBackup[1] = parseHistory(16);
+		//stockHistoryBackup[0] = parseHistory(17);
+		//stockHistoryBackup[1] = parseHistory(16);
 
 	}
 	
@@ -66,7 +67,7 @@ public class World {
 	public static double[] parseHistory(int id) {
 		ArrayList<Double> result = new ArrayList<Double>();
 		try {
-			Scanner in = new Scanner(new FileReader(HISTORY_PREFIX + id));
+			Scanner in = new Scanner(new FileReader(HISTORY_PATH + HISTORY_PREFIX + id + ".csv"));
 			while (in.hasNextLine()){
 				String line = in.nextLine();
 				String[] segments = line.split(",");
@@ -78,15 +79,7 @@ public class World {
 			System.err.println("File not found: "+HISTORY_PREFIX);
 			e.printStackTrace();
 		}
-//		Double max = 0.0;
-//		for (Double d : result) {
-//			if (d > max) {
-//				max = d;
-//			}
-//		}
-//		for (int i = 0; i < result.size(); ++i) {
-//			result.set(i,result.get(i)*(1/max));
-//		}
+
 		double[] result2 = new double[result.size()];
 		for (int i = 0; i < result.size(); i++) {
 			result2[i] = result.get(i);
@@ -110,7 +103,9 @@ public class World {
 			initializeHistory(stock);
 		}
 		int i = 0;
+		
 		for (Agent a : agents) {
+			
 			a.act(i);
 			++i;
 		}
@@ -125,7 +120,6 @@ public class World {
 		ArrayList<Double> prices = new ArrayList<Double>(INPUT_SIZE);
 		int j = 0;
 		for (int i = currentTick - INPUT_SIZE; i <= currentTick; i++) {
-//			System.out.println(stock);
 			prices.add(stockHistory[stock][i]/stockHistory[stock][currentTick]);
 			j += 1;
 		}
