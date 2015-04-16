@@ -1,7 +1,6 @@
 package neuralnetwork;
 
 import java.util.ArrayList;
-import java.util.Arrays;
 
 import environment.World;
 
@@ -15,12 +14,12 @@ public class Network{
 		layers = new ArrayList<ArrayList<Neuron>>();
 		maxWeight = 1;
 		for (int i = 0; i <= World.INPUT_SIZE;++i) {
-			addNeuron(3, new Neuron());
-		}
+			addNeuron(2, new Neuron());
+		}/*
 		for (int i = 0; i < 10 ;++i) {
 			addNeuron(2, new Neuron());
-		}
-		for (int i = 0; i < 10 ;++i) {
+		}*/
+		for (int i = 0; i < 20 ;++i) {
 			addNeuron(1, new Neuron());
 		}
 		addNeuron(0, new Neuron());

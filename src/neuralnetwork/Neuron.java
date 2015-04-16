@@ -2,22 +2,14 @@ package neuralnetwork;
 
 
 import java.util.ArrayList;
-import java.util.Arrays;
-import java.util.Random;
 
 public class Neuron {
-	private static final boolean DEBUGGING_NEURON = false;
-	private static void debug_println(String s){
-		if(DEBUGGING_NEURON) System.out.println(s);
-	}
 	
 	private ArrayList<Axon> inputs;	//NEEDS to stay an ordered collection
 	private double threshold;
-	private Random generator;
 	private double value;
 	
 	public Neuron(){
-		generator = new Random();
 		inputs = new ArrayList<Axon>();
 		//threshold = generator.nextInt(200)-100;
 	}

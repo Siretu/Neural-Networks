@@ -16,8 +16,9 @@ public class Agent implements Comparable<Agent>{
 	private int sales;
 	private int purchases;
 	
-	public ArrayList<Character> choices;
-	public ArrayList<Character> choices2;
+	public ArrayList<Double> choices;
+	public ArrayList<Double> choices2;
+	public ArrayList<Character> choice;
 	
 	public Agent() {
 		this(new Network()); 
@@ -28,14 +29,16 @@ public class Agent implements Comparable<Agent>{
 	}
 
 	public Agent(Network n) {
-		choices = new ArrayList<Character>();
-		choices2 = new ArrayList<Character>();
+		choices = new ArrayList<Double>();
+		choices2 = new ArrayList<Double>();
+		choice = new ArrayList<Character>();
 		sales = 0;
 		purchases = 0;
 		funds = START_FUNDS;
 		network = new Network(n);
 		setStocks(new ArrayList<Double>(World.NR_STOCKS));
 		for (int i = 0; i < World.NR_STOCKS; ++i) {
+			choices.add(0.0);
 			stocks.add(0.0);
 		}
 	}
@@ -43,10 +46,12 @@ public class Agent implements Comparable<Agent>{
 	public void reset() {
 		choices.clear();
 		choices2.clear();
+		choice.clear();
 		sales = 0;
 		purchases = 0;
 		funds = START_FUNDS;
 		for (int i = 0; i < World.NR_STOCKS; ++i) {
+			choices.add(0.0);
 			stocks.set(i,0.0);
 		}
 	}
@@ -55,6 +60,8 @@ public class Agent implements Comparable<Agent>{
 		for (int x = 0; x < World.NR_STOCKS; x++) {
 
 			ArrayList<Double> history = world.getHistory(x);
+			
+			int show = 0;
 			
 			network.input(history);
 			double output1 = network.output(0);
@@ -66,21 +73,21 @@ public class Agent implements Comparable<Agent>{
 				buy(x);
 				purchases++;
 //				funds = Math.max(0,funds-100);
-				if (x == 0) {
-					choices.add('b');
+				if (x == show) {
+					choice.add('b');
 				}
-			} else if (output1 < -0.1) {
+			} else if (output1 < 0) {
 //				System.out.println("sell");
 				sell(x);
 				sales++;
-				if (x == 0) {
-					choices.add('s');
+				if (x == show) {
+					choice.add('s');
 				}
 			} else {
 				sell(x);
 				sales++;
-				if (x == 0) {
-					choices.add('s');
+				if (x == show) {
+					choice.add('s');
 //					choices.add('0');
 				}
 			}
@@ -91,9 +98,10 @@ public class Agent implements Comparable<Agent>{
 		if (stocks.get(stock) == 0) {
 			double currentPrice = world.getPrice(stock);
 			// Try to use START_FUNDS / NR_STOCKS 
-			double goal = Math.min(funds, START_FUNDS/world.NR_STOCKS);
+			double goal = Math.min(funds, START_FUNDS/World.NR_STOCKS);
 			
 			stocks.set(stock, goal / currentPrice);
+			choices.set(stock,goal);
 			funds -= goal;
 		}
 	}
@@ -102,16 +110,17 @@ public class Agent implements Comparable<Agent>{
 		if (stocks.get(stock) > 0) {
 			double currentPrice = world.getPrice(stock);
 			funds += (stocks.get(stock) * currentPrice);
+			choices2.add(stocks.get(stock) * currentPrice - choices.get(stock));
 			stocks.set(stock, 0.0);
 		}
 	}
 	
 	public double getFitness() {
 		double result = funds;
-		/*for (int i = 0; i < world.NR_STOCKS; i++) {
+		for (int i = 0; i < World.NR_STOCKS; i++) {
 			double currentPrice = world.getPrice(i);
 			result += stocks.get(i) * currentPrice;
-		}*/
+		}
 		return result;
 	}
 	
@@ -150,11 +159,22 @@ public class Agent implements Comparable<Agent>{
         // compareTo should return < 0 if this is supposed to be
         // less than other, > 0 if this is supposed to be greater than 
         // other and 0 if they are supposed to be equal
-    	return (int) (getFitness() - other.getFitness());
+    	if (getFitness() > other.getFitness()) {
+    		return 1;
+    	} else if (getFitness() < other.getFitness()) {
+    		return -1;
+    	} else {
+    		return 0;
+    	}
     }
     
     public String toString() {
-    	return getFitness() + ": " + sales + "/" + purchases + " " + Arrays.toString(choices.toArray());// + "\n" + Arrays.toString(choices2.toArray());
+		double result = 0;
+		for (int i = 0; i < World.NR_STOCKS; i++) {
+			double currentPrice = world.getPrice(i);
+			result += stocks.get(i) * currentPrice;
+		}
+    	return getFitness() + ": "+ result + " | " + sales + "/" + purchases + " " + Arrays.toString(choices2.toArray());// + "\n" + Arrays.toString(choices2.toArray());
     }
 	
 }

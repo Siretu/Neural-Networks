@@ -1,8 +1,6 @@
 package genetic;
 
 import java.util.ArrayList;
-import java.util.Arrays;
-import java.util.Collection;
 import java.util.Collections;
 
 import neuralnetwork.Axon;
@@ -94,7 +92,7 @@ public class Population {
 			for (int node = 0; node < currLayer.size(); ++node) {
 				Neuron currNeuron = currLayer.get(node);
 				for (int input = 0; input < currNeuron.getInputs().size(); ++input) {
-					Axon currAxon = currNeuron.getInputs().get(input);
+//					Axon currAxon = currNeuron.getInputs().get(input);
 					double weight;
 					double weight1 = a.getNetwork().getLayer(layer).get(node).getInputs().get(input).getWeight();
 					double weight2 = b.getNetwork().getLayer(layer).get(node).getInputs().get(input).getWeight();

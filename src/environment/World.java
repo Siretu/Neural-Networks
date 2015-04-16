@@ -72,6 +72,7 @@ public class World {
 			while (in.hasNextLine()){
 				String line = in.nextLine();
 				String[] segments = line.split(",");
+//				System.out.println(id);
 				result.add(Double.parseDouble(segments[dataIndex]));
 			}
 			in.close();
@@ -93,6 +94,11 @@ public class World {
 		while (currentTick < HISTORY_SIZE) {
 			tick();
 			currentTick++;
+		}
+		for (Agent a : agents) {
+			for (int x = 0; x < NR_STOCKS; x++) {
+				a.sell(x);
+			}
 		}
 	}
 	
@@ -119,10 +125,11 @@ public class World {
 	
 	public void initializeHistory(int stock) {
 		ArrayList<Double> prices = new ArrayList<Double>(INPUT_SIZE);
-		int j = 0;
 		for (int i = currentTick - INPUT_SIZE; i <= currentTick; i++) {
+//			System.out.println(stock);
+//			System.out.println(currentTick);
+//			System.out.println(i);
 			prices.add(stockHistory[stock][i]/stockHistory[stock][currentTick]);
-			j += 1;
 		}
 		currentHistory.set(stock,prices);
 	}
